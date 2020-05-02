@@ -7,6 +7,7 @@ from flask_ngrok import run_with_ngrok
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'wav', 'webm'])
 
 app = Flask(__name__)
+run_with_ngrok(app)   
 #app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def allowed_file(filename):
