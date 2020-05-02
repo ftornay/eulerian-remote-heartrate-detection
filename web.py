@@ -1,41 +1,40 @@
-# import the necessary packages
-from imutils.video import VideoStream
-from flask import Response
-from flask import Flask
-from flask import render_template
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+#from werkzeug import secure_filename
+#from werkzeug.contrib.fixers import ProxyFix
+import werkzeug
 from flask_ngrok import run_with_ngrok
-import threading
-import argparse
-import datetime
-import imutils
-import time
-import cv2
 
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'wav', 'webm'])
 
-# initialize the output frame and a lock used to ensure thread-safe
-# exchanges of the output frames (useful when multiple browsers/tabs
-# are viewing the stream)
-outputFrame = None
-lock = threading.Lock()
-# initialize a flask object
 app = Flask(__name__)
-run_with_ngrok(app)   #starts ngrok when the app is run
-# initialize the video stream and allow the camera sensor to
-# warmup
-#vs = VideoStream(usePiCamera=1).start()
-#vs = VideoStream(src=0).start()
-#time.sleep(2.0)
+#app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# render our main and serve up the output
-@app.route("/")
-def index():
-	# return the rendered template
-	return render_template("index.html")
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route("/video_feed")
-def video_feed():
-	# return the response generated along with the specific media
-	# type (mime type)
-	return ('', 204)
+@app.route('/')
+def upload_form():
+	return render_template('upload.html')
 
-app.run()
+@app.route('/', methods=['POST'])
+def upload_file():
+	if request.method == 'POST':
+        # check if the post request has the file part
+		if 'file' not in request.files:
+			flash('No file part')
+			return redirect(request.url)
+		file = request.files['file']
+		if file.filename == '':
+			flash('No file selected for uploading')
+			return redirect(request.url)
+		if file and allowed_file(file.filename):
+			filename = secure_filename(file.filename)
+			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+			flash('File successfully uploaded')
+			return redirect('/')
+		else:
+			flash('Allowed file types are txt, pdf, png, jpg, jpeg, gif, wav, webm')
+			return redirect(request.url)
+
+if __name__ == "__main__":
+    app.run()
