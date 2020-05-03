@@ -39,7 +39,7 @@ def upload_file():
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     heartrate, video = heartrate(os.path.join(app.config['UPLOAD_FOLDER'],
-                               filename)
+                               filename))
 
     return render_template('results.html', heartrate=heartrate, video=video)
 
