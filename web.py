@@ -11,13 +11,6 @@ run_with_ngrok(app)
 app.config['UPLOAD_FOLDER'] = 'upload/'
 
 def allowed_file(filename):
-	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-@app.route('/')
-def upload_form():
-	return render_template('upload.html')
-
-def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -39,7 +32,8 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file',
                                     filename=filename))
-    return
+    else:
+            return render_template('upload.html')
 
 from flask import send_from_directory
 
