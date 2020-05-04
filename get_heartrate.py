@@ -4,7 +4,7 @@ import heartrate
 import preprocessing
 import eulerian
 
-def heartrate(filename):
+def get_heartrate(filename):
     # Frequency range for Fast-Fourier Transform
     freq_min = 1
     freq_max = 1.8
@@ -30,6 +30,6 @@ def heartrate(filename):
 
         # Calculate heart rate
 
-        heart_rate = heartrate.find_heart_rate(fft, frequencies, freq_min, freq_max)
+        hr = heartrate.find_heart_rate(fft, frequencies, freq_min, freq_max)
 
-    return heart_rate, filename
+    return hr, filename

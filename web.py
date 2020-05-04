@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, send_from_
 from werkzeug.utils import secure_filename
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_ngrok import run_with_ngrok
-from get_heartrate import heartrate
+from get_heartrate import get_heartrate
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'wav', 'webm', 'mp4'])
 
@@ -38,7 +38,7 @@ def upload_file():
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    hr, video = heartrate(os.path.join(app.config['UPLOAD_FOLDER'],
+    hr, video = get_heartrate(os.path.join(app.config['UPLOAD_FOLDER'],
                                filename))
 
     return render_template('results.html', heartrate=str(hr), video=video)
