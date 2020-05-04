@@ -10,6 +10,7 @@ def get_heartrate(filename):
     freq_max = 1.8
 
     # Preprocessing phase
+    hr = -1 # Valor por defecto
 
     video_frames, frame_ct, fps = preprocessing.read_video(filename)
 
