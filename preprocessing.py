@@ -7,9 +7,7 @@ faceCascade = cv2.CascadeClassifier("haarcascades/haarcascade_frontalface_alt0.x
 
 # Read in and simultaneously preprocess video
 def read_video(path):
-    #cap = cv2.VideoCapture(path)
-    # Use skvideo instead of cv2 to read files
-    cap = skvideo.io.vread(path)
+    cap = cv2.VideoCapture(path)
     fps = int(cap.get(cv2.CAP_PROP_FPS))
     video_frames = []
     face_rects = ()
