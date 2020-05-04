@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from flask import Flask, flash, render_template, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_ngrok import run_with_ngrok
@@ -34,7 +34,8 @@ def upload_file():
             return redirect(url_for('show_heartrate',
                                     filename=filename))
         else:
-            return render_template('upload.html')
+            flash('File not allowed')
+            return redirect(request.url)
     else:
             return render_template('upload.html')
 
