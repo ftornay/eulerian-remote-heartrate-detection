@@ -31,13 +31,13 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file',
+            return redirect(url_for('show_heartrate',
                                     filename=filename))
     else:
             return render_template('upload.html')
 
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
+@app.route('/heartrate/<filename>')
+def show_heartrate(filename):
     hr, video = get_heartrate(os.path.join(app.config['UPLOAD_FOLDER'],
                                filename))
 
