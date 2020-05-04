@@ -1,5 +1,4 @@
 import cv2
-import skvideo.io
 import numpy as np
 
 faceCascade = cv2.CascadeClassifier("haarcascades/haarcascade_frontalface_alt0.xml")
