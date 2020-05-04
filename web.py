@@ -5,7 +5,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_ngrok import run_with_ngrok
 from get_heartrate import get_heartrate
 
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'wav', 'webm', 'mp4'])
+ALLOWED_EXTENSIONS = set(['mov', 'mp4'])
 
 app = Flask(__name__)
 run_with_ngrok(app)   
@@ -33,6 +33,8 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('show_heartrate',
                                     filename=filename))
+        else:
+            return render_template('upload.html')
     else:
             return render_template('upload.html')
 
