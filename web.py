@@ -41,7 +41,7 @@ def uploaded_file(filename):
     hr, video = heartrate(os.path.join(app.config['UPLOAD_FOLDER'],
                                filename))
 
-    return render_template('results.html', heartrate=hr, video=video)
+    return render_template('results.html', heartrate=str(hr), video=video)
 
 if __name__ == "__main__":
     app.run()

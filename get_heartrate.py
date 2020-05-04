@@ -11,7 +11,7 @@ def heartrate(filename):
 
 # Preprocessing phase
 
- video_frames, frame_ct, fps = preprocessing.read_video("/uploads/<filename>")
+ video_frames, frame_ct, fps = preprocessing.read_video(filename)
 
 # Build Laplacian video pyramid
 
@@ -32,4 +32,4 @@ def heartrate(filename):
 
      heart_rate = heartrate.find_heart_rate(fft, frequencies, freq_min, freq_max)
 
- return heart_rate
+ return heart_rate, filename
